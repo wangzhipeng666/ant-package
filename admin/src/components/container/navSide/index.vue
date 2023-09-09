@@ -15,7 +15,16 @@
 </template>
 
 <script setup>
-import { HomeOutlined, CarOutlined } from '@ant-design/icons-vue';
+import {
+  HomeOutlined,
+  SettingFilled,
+  SmileOutlined,
+  SyncOutlined,
+  LoadingOutlined,
+  SmileTwoTone,
+  HeartTwoTone,
+  CheckCircleTwoTone 
+} from '@ant-design/icons-vue';
 
 let data = [
   {
@@ -24,37 +33,37 @@ let data = [
     index: '/'
   },
   {
-    icon: CarOutlined,
+    icon: SettingFilled,
     name: '省市区选择',
     index: '/chooseArea'
   },
   {
-    icon: 'Timer',
+    icon: SmileOutlined,
     name: '时间选择',
     index: '/chooseTime'
   },
   {
-    icon: 'TurnOff',
+    icon: SyncOutlined,
     name: '城市选择',
     index: '/chooseCity'
   },
   {
-    icon: 'DArrowRight',
+    icon: LoadingOutlined,
     name: '进度条',
     index: '/progress'
   },
   {
-    icon: 'Setting',
+    icon: SmileTwoTone,
     name: '表单',
     index: '/form'
   },
   {
-    icon: 'Setting',
+    icon: HeartTwoTone,
     name: '弹出框表单',
     index: '/modalForm'
   },
   {
-    icon: 'ShoppingBag',
+    icon: CheckCircleTwoTone ,
     name: '表格',
     index: '/table'
   }
