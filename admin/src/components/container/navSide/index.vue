@@ -1,14 +1,12 @@
 <template>
   <a-menu
-      :default-selected-keys="['首页']"
       mode="inline"
       theme="dark"
-      :inline-collapsed="collapse"
     >
       <template v-for="item in data" :key="item.name">
         <a-menu-item>
             <template #icon>
-              
+              <component :is="item.icon" />
             </template>
             {{ item.name }}
         </a-menu-item>
@@ -17,45 +15,23 @@
 </template>
 
 <script setup>
-defineProps({
-  collapse: Boolean
-})
+import { HomeOutlined, CarOutlined } from '@ant-design/icons-vue';
 
 let data = [
   {
-    icon: 'HomeFilled',
+    icon: HomeOutlined,
     name: '首页',
     index: '/'
   },
   {
-    icon: 'Check',
-    name: '图标选择器',
-    index: '/chooseIcon'
-  },
-  {
-    icon: 'Location',
+    icon: CarOutlined,
     name: '省市区选择',
     index: '/chooseArea'
-  },
-  {
-    icon: 'Sort',
-    name: '趋势标记',
-    index: '/trend'
   },
   {
     icon: 'Timer',
     name: '时间选择',
     index: '/chooseTime'
-  },
-  {
-    icon: 'Bell',
-    name: '通知菜单',
-    index: '/notification'
-  },
-  {
-    icon: 'Menu',
-    name: '导航菜单',
-    index: '/menu'
   },
   {
     icon: 'TurnOff',

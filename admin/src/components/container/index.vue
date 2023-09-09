@@ -8,8 +8,8 @@ const isCollapse = ref(false)
 
 <template>
   <a-layout>
-    <a-layout-sider width="200">
-        <nav-side :collapse="isCollapse"></nav-side>
+    <a-layout-sider width="200" :collapsed="isCollapse">
+        <nav-side></nav-side>
     </a-layout-sider>
     <a-layout>
     <a-layout-header style="background: #fff">
@@ -33,5 +33,9 @@ const isCollapse = ref(false)
 
 :deep(.ant-layout-content) {
     height: calc(100vh - 96px);
+}
+
+:deep(.ant-menu) {
+    margin-top: 18px;
 }
 </style>
