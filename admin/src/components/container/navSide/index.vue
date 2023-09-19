@@ -4,7 +4,7 @@
       theme="dark"
       :selectedKeys="selectedKeys"
     >
-      <template v-for="item in data" :key="item.name">
+      <template v-for="item in data" :key="item.index">
         <a-menu-item @click="handleToPage(item)">
             <template #icon>
               <component :is="item.icon" />
@@ -27,13 +27,14 @@ import {
   HeartTwoTone,
   CheckCircleTwoTone
 } from '@ant-design/icons-vue';
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter();
+const route = useRoute()
 
-const selectedKeys = ref(['首页']);
+const selectedKeys = ref([route.path]);
 const handleToPage = (item) => {
-  selectedKeys.value = [item.name]
+  selectedKeys.value = [item.index]
   router.push(item.index)
 }
 
