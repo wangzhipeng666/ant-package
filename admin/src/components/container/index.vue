@@ -32,6 +32,7 @@ const isCollapse = ref(false)
 }
 
 :deep(.ant-layout-content) {
+    padding: 30px;
     height: calc(100vh - 96px);
 }
 

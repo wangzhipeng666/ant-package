@@ -2,9 +2,10 @@
   <a-menu
       mode="inline"
       theme="dark"
+      :selectedKeys="selectedKeys"
     >
       <template v-for="item in data" :key="item.name">
-        <a-menu-item>
+        <a-menu-item @click="handleToPage(item)">
             <template #icon>
               <component :is="item.icon" />
             </template>
@@ -15,16 +16,26 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import {
   HomeOutlined,
   SettingFilled,
+  FieldTimeOutlined,
   SmileOutlined,
-  SyncOutlined,
-  LoadingOutlined,
+  FundOutlined,
   SmileTwoTone,
   HeartTwoTone,
-  CheckCircleTwoTone 
+  CheckCircleTwoTone
 } from '@ant-design/icons-vue';
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+
+const selectedKeys = ref(['首页']);
+const handleToPage = (item) => {
+  selectedKeys.value = [item.name]
+  router.push(item.index)
+}
 
 let data = [
   {
@@ -38,17 +49,17 @@ let data = [
     index: '/chooseArea'
   },
   {
-    icon: SmileOutlined,
+    icon: FieldTimeOutlined,
     name: '时间选择',
     index: '/chooseTime'
   },
   {
-    icon: SyncOutlined,
+    icon: SmileOutlined,
     name: '城市选择',
     index: '/chooseCity'
   },
   {
-    icon: LoadingOutlined,
+    icon: FundOutlined,
     name: '进度条',
     index: '/progress'
   },

@@ -13,8 +13,12 @@ const router = createRouter({
           path: '/',
           component: Home
         },
+        {
+          path: '/chooseArea',
+          component: () => import('../views/chooseArea/index.vue'),
+        },
       ]
-    }
+    },
   ]
 })
 
