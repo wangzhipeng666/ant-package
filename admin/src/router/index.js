@@ -22,6 +22,10 @@ const router = createRouter({
           component: () => import('../views/chooseTime/index.vue'),
         },
         {
+          path: '/chooseCity',
+          component: () => import('../views/chooseCity/index.vue'),
+        },
+        {
           path: '/progress',
           component: () => import('../views/progress/index.vue'),
         },
