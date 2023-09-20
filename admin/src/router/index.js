@@ -21,6 +21,10 @@ const router = createRouter({
           path: '/chooseTime',
           component: () => import('../views/chooseTime/index.vue'),
         },
+        {
+          path: '/progress',
+          component: () => import('../views/progress/index.vue'),
+        },
       ]
     },
   ]

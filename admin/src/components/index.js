@@ -1,9 +1,11 @@
 import chooseArea from './chooseArea'
 import chooseTime from './chooseTime'
+import progress from './progress'
 
 const components = [
     chooseArea,
-    chooseTime
+    chooseTime,
+    progress
 ]
 
 export default {
