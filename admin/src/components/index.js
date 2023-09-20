@@ -1,7 +1,9 @@
 import chooseArea from './chooseArea'
+import chooseTime from './chooseTime'
 
 const components = [
-    chooseArea
+    chooseArea,
+    chooseTime
 ]
 
 export default {

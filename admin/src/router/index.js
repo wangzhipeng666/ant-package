@@ -17,6 +17,10 @@ const router = createRouter({
           path: '/chooseArea',
           component: () => import('../views/chooseArea/index.vue'),
         },
+        {
+          path: '/chooseTime',
+          component: () => import('../views/chooseTime/index.vue'),
+        },
       ]
     },
   ]
