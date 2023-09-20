@@ -5,6 +5,7 @@
       :placeholder="startPlaceholder"
       style="margin-right: 10px;width: 200px;"
       allowClear
+      v-bind="$attrs"
     />
     <a-time-picker
       v-model:value="endTime"
@@ -15,6 +16,7 @@
       :disabledHours="disabledHours"
       :disabledMinutes="disabledMinutes"
       :disabledSeconds="disabledSeconds"
+      v-bind="$attrs"
     />
   </div>
 </template>
