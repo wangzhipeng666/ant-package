@@ -19,10 +19,11 @@
           v-if="item.type === 'upload'"
           v-bind="item.uploadAttrs"
           :before-upload="beforeUpload"
+          :custom-request="customRequest"
           @change="handleChange"
           @preview="preview"
           @download="downloadFile"
-          :previewFile="previewFile"
+          :preview-file="previewFile"
           @remove="removeFile"
         >
           <slot name="uploadArea"></slot>
@@ -63,6 +64,10 @@ let props = defineProps({
   options: {
     type: Array,
     required: true
+  },
+  // 用户自定义上传方法
+  customRequest: {
+    type: Function
   }
 })
 
