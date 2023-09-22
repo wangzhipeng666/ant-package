@@ -191,7 +191,7 @@ let options = [
   },
   {
     type: 'editor',
-    value: '123',
+    value: '<h2>123</h2>',
     prop: 'desc',
     label: '描述',
     editorOptions: {

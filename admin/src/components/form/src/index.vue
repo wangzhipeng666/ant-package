@@ -29,7 +29,15 @@
           <slot name="uploadArea"></slot>
           <slot name="uploadTip"></slot>
         </a-upload>
-        <QuillEditor :options="item.editorOptions" id="editor" v-bind="item.attrs" v-if="item.type === 'editor'" />
+        <QuillEditor
+          ref="myQuillEditor"
+          id="editor"
+          :options="item.editorOptions"
+          v-model="editorContent"
+          v-bind="item.attrs"
+          v-if="item.type === 'editor'"
+          @change="onEditorChange($event)"
+        />
       </a-form-item>
       <a-form-item :label="item.label" :name="item.prop" v-if="item.children && item.children.length">
         <component
@@ -80,6 +88,12 @@ let form = ref()
 const model = ref(null)
 // 表单校验规则
 const rules = ref(null)
+// 编辑器
+const editorContent = ref(null)
+
+const onEditorChange = ({ quill, html, text }) => {
+  editorContent.value = html
+}
 
 const initForm = () => {
   if (props.options && props.options.length) {
@@ -90,12 +104,13 @@ const initForm = () => {
       r[item.prop] = item.rules
       if (item.type === 'editor') {
         // 初始化富文本
-        // nextTick(() => {
-        //   let el = document.getElementById('editor')
-        //   if (el) {
-        //     el.innerHTML = item.value
-        //   }
-        // })
+        nextTick(() => {
+          let el = document.getElementById('editor')
+          if (el) {
+            el.innerHTML = item.value
+          }
+          // editorContent.value = item.value
+        })
       }
     })
     model.value = cloneDeep(m)
