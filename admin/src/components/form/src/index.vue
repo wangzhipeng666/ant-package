@@ -1,11 +1,40 @@
 <template>
   <a-form
+    v-if="model"
     ref="form"
     :model="model"
     :rules="rules"
     v-bind="$attrs"
   >
-    <span>aaa</span>
+    <template v-for="(item, index) in options" :key="index">
+      <a-form-item :label="item.label" :name="item.prop" v-if="!item.children || !item.children.length">
+        <component
+          v-if="item.type !== 'upload' && item.type !== 'editor'"
+          :placeholder="item.placeholder"
+          :is="`a-${item.type}`"
+          v-bind="item.attrs"
+          v-model:value="model[item.prop]"
+        ></component>
+      </a-form-item>
+      <a-form-item :label="item.label" :name="item.prop" v-if="item.children && item.children.length">
+        <component
+          v-if="item.type !== 'upload' && item.type !== 'editor'"
+          :placeholder="item.placeholder"
+          :is="`a-${item.type}`"
+          v-bind="item.attrs"
+          v-model:value="model[item.prop]"
+        >
+          <component
+            v-for="(child, i) in item.children"
+            :key="i"
+            :is="`a-${child.type}`"
+            :value="child.value"
+          >
+          {{ child.label }}
+          </component>
+        </component>
+      </a-form-item>
+    </template>
     <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
       <slot name="action" :form="form" :model="model"></slot>
     </a-form-item>
@@ -13,9 +42,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-let form = ref()
+import { onMounted, ref, watch } from 'vue'
+import { cloneDeep } from 'lodash-es';
 
 let props = defineProps({
   // 表单的配置项
@@ -25,18 +53,55 @@ let props = defineProps({
   }
 })
 
+// 表单实例
+let form = ref()
 // 表单数据对象
 const model = ref(null)
 // 表单校验规则
 const rules = ref(null)
 
+const initForm = () => {
+  if (props.options && props.options.length) {
+    let m = {}
+    let r = {}
+    props.options.map(item => {
+      m[item.prop] = item.value
+      r[item.prop] = item.rules
+    })
+    console.log(m)
+    console.log(r)
+    model.value = cloneDeep(m)
+    rules.value = cloneDeep(r)
+  }
+}
+
+onMounted(() => {
+  initForm()
+})
+
+// 监听父组件传递进来的options
+watch(() => props.options, () => {
+  initForm()
+}, { deep: true })
+
+// 重置表单
 const resetFields = () => {
   form.value.resetFields();
 }
+// 验证表单
+const validate = () => {
+  return form.value.validate
+}
+//获取表单数据
+const getFormData = () => {
+  return model.value
+}
 
-// 分发方法
+// 暴露属性或方法给父组件，属性需要父组件在onMounted中接收
 defineExpose({
   resetFields,
+  validate,
+  getFormData,
 })
 
 </script>

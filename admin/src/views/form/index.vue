@@ -9,6 +9,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { message } from 'ant-design-vue'
 
 let form = ref()
 
@@ -33,11 +34,11 @@ let options = [
       }
     ],
     attrs: {
-      clearable: true
+      allowClear: true
     }
   },
   {
-    type: 'input',
+    type: 'input-password',
     value: '',
     label: '密码',
     prop: 'password',
@@ -56,13 +57,12 @@ let options = [
       }
     ],
     attrs: {
-      showPassword: true,
-      clearable: true
+      visibilityToggle: true
     }
   },
   {
     type: 'select',
-    value: '',
+    value: null,
     placeholder: '请选择职位',
     prop: 'role',
     label: '职位',
@@ -80,17 +80,17 @@ let options = [
     ],
     children: [
       {
-        type: 'option',
+        type: 'select-option',
         label: '经理',
         value: '1'
       },
       {
-        type: 'option',
+        type: 'select-option',
         label: '主管',
         value: '2'
       },
       {
-        type: 'option',
+        type: 'select-option',
         label: '员工',
         value: '3'
       }
@@ -196,12 +196,20 @@ const wrapperCol = {
     span: 14,
 }
 
+// 重置表单
 const resetForm = () => {
-    form.value.resetFields();
+  form.value.resetFields();
 };
 
+// 提交表单
 const onSubmit = (scope) => {
-    console.log(scope)
+  scope.form.validate().then(() => {
+    console.log(scope.model)
+    message.success('提交成功')
+  }).catch((err) => {
+    console.log('err:', err)
+    message.error('表单填写有误,请检查')
+  })
 }
 </script>
 
