@@ -1,5 +1,22 @@
 <template>
-  <a-custom-form ref="form" :options="options" :label-col="labelCol" :wrapper-col="wrapperCol">
+  <a-custom-form
+    ref="form"
+    :options="options"
+    :label-col="labelCol"
+    :wrapper-col="wrapperCol"
+    @before-upload="beforeUpload"
+    @preview-file="previewFile"
+    @remove-file="removeFile"
+    @on-change="handleChange"
+    @on-preview="preview"
+    @on-download="downloadFile"
+  >
+    <template #uploadArea>
+      <a-button>Click to Upload</a-button>
+    </template>
+    <template #uploadTip>
+      <div style="color: #ccc;font-size: 12px;">jpg/png files with a size less than 500kb</div>
+    </template>
     <template #action="scope">
       <a-button type="primary" @click="onSubmit(scope)">保存</a-button>
       <a-button style="margin-left: 10px" @click="resetForm">重置</a-button>
@@ -162,8 +179,7 @@ let options = [
     prop: 'pic',
     uploadAttrs: {
       action: 'https://jsonplaceholder.typicode.com/posts/',
-      multiple: true,
-      limit: 3
+      multiple: true
     },
     rules: [
       {
@@ -210,6 +226,34 @@ const onSubmit = (scope) => {
     console.log('err:', err)
     message.error('表单填写有误,请检查')
   })
+}
+
+/**
+ * 上传组件
+ */
+const beforeUpload = (file, fileList) => {
+  console.log('beforeUpload', file, fileList)
+}
+
+const previewFile = (file) => {
+  console.log('previewFile', file)
+}
+
+
+const removeFile = (file) => {
+  console.log('removeFile', file)
+}
+
+const handleChange = (info) => {
+  console.log('info:', info)
+}
+
+const preview = (file) => {
+  console.log('preview', file)
+}
+
+const downloadFile = (file) => {
+  console.log('downloadFile', file)
 }
 </script>
 

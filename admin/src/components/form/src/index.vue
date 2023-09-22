@@ -15,6 +15,19 @@
           v-bind="item.attrs"
           v-model:value="model[item.prop]"
         ></component>
+        <a-upload
+          v-if="item.type === 'upload'"
+          v-bind="item.uploadAttrs"
+          :before-upload="beforeUpload"
+          @change="handleChange"
+          @preview="preview"
+          @download="downloadFile"
+          :previewFile="previewFile"
+          @remove="removeFile"
+        >
+          <slot name="uploadArea"></slot>
+          <slot name="uploadTip"></slot>
+        </a-upload>
       </a-form-item>
       <a-form-item :label="item.label" :name="item.prop" v-if="item.children && item.children.length">
         <component
@@ -83,6 +96,35 @@ onMounted(() => {
 watch(() => props.options, () => {
   initForm()
 }, { deep: true })
+
+let emits = defineEmits(['before-upload', 'preview-file', 'remove-file', 'on-change', 'on-preview', 'on-download'])
+/**
+ * 上传组件
+ */
+const beforeUpload = (file, fileList) => {
+  emits('before-upload', file, fileList)
+}
+
+const previewFile = (file) => {
+  emits('preview-file', file)
+}
+
+
+const removeFile = (file) => {
+  emits('remove-file', file)
+}
+
+const handleChange = (info) => {
+  emits('on-change', info)
+}
+
+const preview = (file) => {
+  emits('on-preview', file)
+}
+
+const downloadFile = (file) => {
+  emits('on-download', file)
+}
 
 // 重置表单
 const resetFields = () => {
