@@ -29,6 +29,7 @@
           <slot name="uploadArea"></slot>
           <slot name="uploadTip"></slot>
         </a-upload>
+        <QuillEditor :options="item.editorOptions" id="editor" v-bind="item.attrs" v-if="item.type === 'editor'" />
       </a-form-item>
       <a-form-item :label="item.label" :name="item.prop" v-if="item.children && item.children.length">
         <component
@@ -56,8 +57,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import { cloneDeep } from 'lodash-es';
+import { onMounted, ref, watch, nextTick } from 'vue'
+import { cloneDeep } from 'lodash-es'
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 let props = defineProps({
   // 表单的配置项
@@ -85,9 +88,16 @@ const initForm = () => {
     props.options.map(item => {
       m[item.prop] = item.value
       r[item.prop] = item.rules
+      if (item.type === 'editor') {
+        // 初始化富文本
+        // nextTick(() => {
+        //   let el = document.getElementById('editor')
+        //   if (el) {
+        //     el.innerHTML = item.value
+        //   }
+        // })
+      }
     })
-    console.log(m)
-    console.log(r)
     model.value = cloneDeep(m)
     rules.value = cloneDeep(r)
   }
@@ -134,6 +144,15 @@ const downloadFile = (file) => {
 // 重置表单
 const resetFields = () => {
   form.value.resetFields();
+  // 重置富文本编辑器的内容
+  // 获取到富文本的配置项
+  if (props.options && props.options.length) {
+    // let editorItem = props.options.find(item => item.type === 'editor')
+    // let el = document.getElementById('editor')
+    // if (el) {
+    //   el.innerHTML = editorItem.value
+    // }
+  }
 }
 // 验证表单
 const validate = () => {

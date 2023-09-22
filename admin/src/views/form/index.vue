@@ -194,7 +194,19 @@ let options = [
     value: '123',
     prop: 'desc',
     label: '描述',
-    placeholder: '请输入描述',
+    editorOptions: {
+      modules: {
+        toolbar: ['bold', 'italic', 'underline']
+      },
+      theme: 'snow',
+      placeholder: '请输入描述',
+    },
+    attrs: {
+      style: {
+        height: '300px',
+        overflow: 'auto'
+      },
+    },
     rules: [
       {
         required: true,
