@@ -80,8 +80,10 @@ let props = defineProps({
   }
 })
 
+let emits = defineEmits(['before-upload', 'preview-file', 'remove-file', 'on-change', 'on-preview', 'on-download'])
+
 // 表单实例
-let form = ref()
+let form = ref(null)
 // 表单数据对象
 const model = ref(null)
 // 表单校验规则
@@ -127,7 +129,6 @@ watch(() => props.options, () => {
   initForm()
 }, { deep: true })
 
-let emits = defineEmits(['before-upload', 'preview-file', 'remove-file', 'on-change', 'on-preview', 'on-download'])
 /**
  * 上传组件
  */
@@ -176,7 +177,7 @@ const resetFields = () => {
 }
 // 验证表单
 const validate = () => {
-  return form.value.validate
+  return form.value.validate()
 }
 //获取表单数据
 const getFormData = () => {
