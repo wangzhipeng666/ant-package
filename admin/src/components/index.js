@@ -4,6 +4,7 @@ import progress from './progress'
 import chooseCity from './chooseCity'
 import form from './form'
 import modalForm from './modalForm'
+import table from './table'
 
 const components = [
     chooseArea,
@@ -12,6 +13,7 @@ const components = [
     progress,
     form,
     modalForm,
+    table,
 ]
 
 export default {
