@@ -145,7 +145,13 @@ const removeFile = (file) => {
 }
 
 const handleChange = (info) => {
-  emits('on-change', info)
+  if (info.file.status === 'done') {
+    if (props.options && props.options.length) {
+      let editorItem = props.options.find(item => item.type === 'upload')
+      model.value[editorItem.prop] = info.file.response.id
+    }
+    emits('on-change', info)
+  }
 }
 
 const preview = (file) => {
