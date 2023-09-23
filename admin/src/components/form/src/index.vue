@@ -31,12 +31,10 @@
         </a-upload>
         <QuillEditor
           ref="myQuillEditor"
-          id="editor"
-          :options="item.editorOptions"
-          v-model="editorContent"
+          v-model:content="editorContent"
           v-bind="item.attrs"
           v-if="item.type === 'editor'"
-          @change="onEditorChange($event)"
+          :options="item.editorOptions"
         />
       </a-form-item>
       <a-form-item :label="item.label" :name="item.prop" v-if="item.children && item.children.length">
@@ -88,12 +86,17 @@ let form = ref()
 const model = ref(null)
 // 表单校验规则
 const rules = ref(null)
-// 编辑器
-const editorContent = ref(null)
+// 编辑器实例
+const myQuillEditor = ref()
+// 编辑器内容
+const editorContent = ref('')
 
-const onEditorChange = ({ quill, html, text }) => {
-  editorContent.value = html
-}
+watch(() => editorContent.value, () => {
+  if (props.options && props.options.length) {
+    let editorItem = props.options.find(item => item.type === 'editor')
+    model.value[editorItem.prop] = myQuillEditor.value[0].getHTML()
+  }
+})
 
 const initForm = () => {
   if (props.options && props.options.length) {
@@ -105,11 +108,8 @@ const initForm = () => {
       if (item.type === 'editor') {
         // 初始化富文本
         nextTick(() => {
-          let el = document.getElementById('editor')
-          if (el) {
-            el.innerHTML = item.value
-          }
-          // editorContent.value = item.value
+          console.log(myQuillEditor.value[0])
+          myQuillEditor.value[0].setHTML(item.value)
         })
       }
     })
@@ -162,11 +162,10 @@ const resetFields = () => {
   // 重置富文本编辑器的内容
   // 获取到富文本的配置项
   if (props.options && props.options.length) {
-    // let editorItem = props.options.find(item => item.type === 'editor')
-    // let el = document.getElementById('editor')
-    // if (el) {
-    //   el.innerHTML = editorItem.value
-    // }
+    let editorItem = props.options.find(item => item.type === 'editor')
+    nextTick(() => {
+      myQuillEditor.value[0].setHTML(editorItem.value)
+    })
   }
 }
 // 验证表单
